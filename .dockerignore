@@ -1,0 +1,21 @@
+# Ignore build artifacts
+target/
+android-client/
+android-bridge/target/
+*.apk
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.txt
+
+# Dashboard node_modules
+dashboard/node_modules/

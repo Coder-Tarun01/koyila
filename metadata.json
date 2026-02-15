@@ -1,0 +1,7 @@
+{
+  "name": "SonicSync: High-Performance Audio Synchronization System",
+  "description": "A production-ready synchronized audio system featuring Rust-backed authoritative time, QUIC transport simulations, and millisecond-level drift correction for multi-device playback.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

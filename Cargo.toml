@@ -1,0 +1,8 @@
+[workspace]
+members = [
+    "rust-core",
+    "server",
+    "cli-client",
+    "android-bridge"
+]
+resolver = "2"
