@@ -38,9 +38,16 @@ Tap **CONNECT TO SERVER** → Status should show **"Connected"** ✅
 
 ### Step 3: Play Music
 
+**Option A — From a URL:**
 1. Enter any **direct audio URL** in the audio field
-2. Tap **PLAY AUDIO** 🎶
-3. To stop, tap **STOP AUDIO**
+2. Tap **▶ PLAY AUDIO** 🎶
+
+**Option B — From your phone:**
+1. Tap **📂 PICK FROM DEVICE**
+2. Select any MP3/WAV file from your phone storage
+3. Tap **▶ PLAY AUDIO** 🎶
+
+To stop, tap **⏹ STOP AUDIO**
 
 ---
 
