@@ -1,9 +1,11 @@
 package com.sonicsync.app
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 
@@ -11,6 +13,22 @@ class MainActivity : ComponentActivity() {
 
     private var player: ExoPlayer? = null
     private var statusText: TextView? = null
+    private var audioInput: EditText? = null
+    private var selectedFileUri: Uri? = null
+
+    private val filePickerLauncher = registerForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            // Take persistent permission so we can play it later
+            contentResolver.takePersistableUriPermission(
+                uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+            selectedFileUri = uri
+            audioInput?.setText("📁 ${getFileName(uri)}")
+            statusText?.text = "Status: Local file selected"
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +51,22 @@ class MainActivity : ComponentActivity() {
 
         // Audio URL input
         val audioLabel = TextView(this).apply {
-            text = "Audio URL (direct MP3/WAV link):"
+            text = "Audio URL or select a local file:"
             textSize = 14f
         }
-        val audioInput = EditText(this).apply {
+        audioInput = EditText(this).apply {
             hint = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
             setText("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
             isSingleLine = true
+        }
+
+        // Browse local file button
+        val browseButton = Button(this).apply {
+            text = "📂 PICK FROM DEVICE"
+        }
+        browseButton.setOnClickListener {
+            selectedFileUri = null
+            filePickerLauncher.launch(arrayOf("audio/*"))
         }
 
         // Status display
@@ -81,23 +108,30 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // Play button - play audio directly on this device
+        // Play button
         val playButton = Button(this).apply {
-            text = "PLAY AUDIO"
+            text = "▶ PLAY AUDIO"
         }
         playButton.setOnClickListener {
-            val audioUrl = audioInput.text.toString().trim()
-            if (audioUrl.isNotEmpty()) {
-                statusText?.text = "Status: Playing $audioUrl"
-                playAudio(audioUrl)
+            if (selectedFileUri != null) {
+                // Play local file
+                statusText?.text = "Status: Playing local file..."
+                playAudio(selectedFileUri.toString())
             } else {
-                Toast.makeText(this, "Please enter an audio URL", Toast.LENGTH_SHORT).show()
+                // Play from URL
+                val audioUrl = audioInput?.text.toString().trim()
+                if (audioUrl.isNotEmpty() && !audioUrl.startsWith("📁")) {
+                    statusText?.text = "Status: Playing from URL..."
+                    playAudio(audioUrl)
+                } else {
+                    Toast.makeText(this, "Enter an audio URL or pick a file", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
         // Stop button
         val stopButton = Button(this).apply {
-            text = "STOP AUDIO"
+            text = "⏹ STOP AUDIO"
         }
         stopButton.setOnClickListener {
             player?.stop()
@@ -110,6 +144,7 @@ class MainActivity : ComponentActivity() {
         layout.addView(TextView(this).apply { text = " " }) // spacer
         layout.addView(audioLabel)
         layout.addView(audioInput)
+        layout.addView(browseButton)
         layout.addView(playButton)
         layout.addView(stopButton)
         layout.addView(statusText)
@@ -117,22 +152,34 @@ class MainActivity : ComponentActivity() {
         setContentView(layout)
     }
 
-    private fun playAudio(url: String) {
+    private fun playAudio(uriString: String) {
         try {
             if (player == null) {
                 player = ExoPlayer.Builder(this).build()
             }
             player?.stop()
-            val mediaItem = MediaItem.fromUri(url)
+            val mediaItem = MediaItem.fromUri(uriString)
             player?.setMediaItem(mediaItem)
             player?.prepare()
             player?.play()
-            statusText?.text = "Status: Playing audio..."
-            Log.i("SonicSync", "Playing: $url")
+            statusText?.text = "Status: Playing audio... 🎶"
+            Log.i("SonicSync", "Playing: $uriString")
         } catch (e: Exception) {
             statusText?.text = "Status: Playback error - ${e.message}"
             Log.e("SonicSync", "Playback error", e)
         }
+    }
+
+    private fun getFileName(uri: Uri): String {
+        var name = "Unknown file"
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val idx = it.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME)
+                if (idx >= 0) name = it.getString(idx)
+            }
+        }
+        return name
     }
 
     override fun onDestroy() {
