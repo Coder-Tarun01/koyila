@@ -26,8 +26,8 @@ class MainActivity : ComponentActivity() {
             textSize = 14f
         }
         val serverInput = EditText(this).apply {
-            hint = "ws://192.168.0.101:3000/ws"
-            setText("ws://192.168.0.101:3000/ws")
+            hint = "wss://koyila-bl6c.onrender.com/ws"
+            setText("wss://koyila-bl6c.onrender.com/ws")
             isSingleLine = true
         }
 

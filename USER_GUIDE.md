@@ -31,7 +31,7 @@ The server is deployed in the cloud — **no laptop needed!**
 
 In the app, enter the server URL:
 ```
-wss://sonicsync-server.onrender.com/ws
+wss://koyila-bl6c.onrender.com/ws
 ```
 
 Tap **CONNECT TO SERVER** → Status should show **"Connected"** ✅
