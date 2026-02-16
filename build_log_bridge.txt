@@ -1,0 +1,69 @@
+    Checking aho-corasick v1.1.4
+   Compiling windows_x86_64_msvc v0.42.2
+    Checking combine v4.6.7
+    Checking android_log-sys v0.3.2
+    Checking cesu8 v1.1.0
+    Checking jni-sys v0.3.0
+    Checking windows-targets v0.42.2
+    Checking windows-sys v0.45.0
+    Checking regex-automata v0.4.14
+    Checking regex v1.12.3
+    Checking matchers v0.2.0
+    Checking tracing-subscriber v0.3.22
+    Checking jni v0.21.1
+    Checking env_logger v0.10.2
+    Checking android_logger v0.13.3
+    Checking server v0.1.0 (C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\server)
+error[E0252]: the name `atomic` is defined multiple times
+   --> server\src\handlers.rs:204:5
+    |
+  9 | use std::sync::{Arc, atomic::{Ordering, self}};
+    |                                         ---- previous import of the module `atomic` here
+...
+204 | use std::sync::atomic;
+    |     ^^^^^^^^^^^^^^^^^ `atomic` reimported here
+    |
+    = note: `atomic` must be defined only once in the type namespace of this module
+
+warning: unused import: `std::sync::atomic`
+   --> server\src\handlers.rs:204:5
+    |
+204 | use std::sync::atomic;
+    |     ^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `header`
+ --> server\src\stream.rs:3:24
+  |
+3 |     http::{StatusCode, header},
+  |                        ^^^^^^
+
+warning: unused imports: `layer::SubscriberExt` and `util::SubscriberInitExt`
+ --> server\src\lib.rs:8:26
+  |
+8 | use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+  |                          ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> server\src\handlers.rs:140:38
+    |
+140 |         ClientMessage::PlayRequest { mut track_url, delay_ms } => {
+    |                                      ----^^^^^^^^^
+    |                                      |
+    |                                      help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `session_id`
+   --> server\src\handlers.rs:143:17
+    |
+143 |             let session_id = session_id.clone();
+    |                 ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_session_id`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+For more information about this error, try `rustc --explain E0252`.
+warning: `server` (lib) generated 5 warnings
+error: could not compile `server` (lib) due to 1 previous error; 5 warnings emitted
+warning: build failed, waiting for other jobs to finish...

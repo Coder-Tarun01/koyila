@@ -1,0 +1,45 @@
+warning: unused import: `header`
+ --> server\src\stream.rs:3:24
+  |
+3 |     http::{StatusCode, header},
+  |                        ^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `layer::SubscriberExt` and `util::SubscriberInitExt`
+ --> server\src\lib.rs:8:26
+  |
+8 | ...::{layer::SubscriberExt, util::SubscriberInitExt};
+  |       ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `session_id`
+   --> server\src\handlers.rs:143:17
+    |
+143 | ...       let session_id = session_id.cl...
+    |               ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_session_id`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `resolve_audio_url` is never used
+   --> server\src\handlers.rs:167:10
+    |
+167 | async fn resolve_audio_url(url: &str) ->...
+    |          ^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `server` (lib) generated 4 warnings (run `cargo fix --lib -p server` to apply 3 suggestions)
+    Checking android-bridge v0.1.0 (C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-bridge)
+error[E0425]: cannot find type `jboolean` in this scope
+   --> android-bridge\src\lib.rs:228:6
+    |
+228 | ) -> jboolean {
+    |      ^^^^^^^^ not found in this scope
+    |
+help: consider importing this type alias
+    |
+  1 + use jni::sys::jboolean;
+    |
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `android-bridge` (lib) due to 1 previous error

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:2:1-27:12
-INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:2:1-27:12
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:2:1-38:12
+INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:2:1-38:12
+INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:2:1-38:12
+INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:2:1-38:12
 MERGED from [androidx.activity:activity:1.8.2] C:\Users\tarun\.gradle\caches\transforms-3\0200fc3725b07db4f420e6ec85517c32\transformed\jetified-activity-1.8.2\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.activity:activity-ktx:1.8.2] C:\Users\tarun\.gradle\caches\transforms-3\1d2e692be7c4aecefffe7d8c2f68ec0d\transformed\jetified-activity-ktx-1.8.2\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.media3:media3-ui:1.2.1] C:\Users\tarun\.gradle\caches\transforms-3\3ec79643e80c2e818d484e55e5c42fc0\transformed\jetified-media3-ui-1.2.1\AndroidManifest.xml:17:1-22:12
@@ -64,9 +64,29 @@ uses-permission#android.permission.READ_MEDIA_AUDIO
 ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:7:5-75
 	android:name
 		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:7:22-72
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:8:5-71
+	android:name
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:8:22-68
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:9:5-76
+	android:name
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:9:22-73
+uses-permission#android.permission.CHANGE_WIFI_MULTICAST_STATE
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:10:5-86
+	android:name
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:10:22-83
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:11:5-77
+	android:name
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:11:22-74
+uses-permission#android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:12:5-94
+	android:name
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:12:22-91
 application
-ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:9:5-25:19
-INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:9:5-25:19
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:14:5-36:19
+INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:14:5-36:19
 MERGED from [androidx.core:core:1.12.0] C:\Users\tarun\.gradle\caches\transforms-3\12c62a97659b3f743650704b36441452\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
 MERGED from [androidx.core:core:1.12.0] C:\Users\tarun\.gradle\caches\transforms-3\12c62a97659b3f743650704b36441452\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\tarun\.gradle\caches\transforms-3\e44f465badaa3f1501a24cc9114311c0\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
@@ -80,33 +100,43 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\tarun\.gradle\cach
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.12.0] C:\Users\tarun\.gradle\caches\transforms-3\12c62a97659b3f743650704b36441452\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:12:9-35
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:17:9-35
 	android:label
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:11:9-41
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:16:9-41
 	android:allowBackup
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:10:9-35
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:15:9-35
 	android:theme
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:13:9-47
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:18:9-47
 	android:networkSecurityConfig
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:14:9-69
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:19:9-69
 activity#com.sonicsync.app.MainActivity
-ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:16:9-24:20
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:21:9-29:20
 	android:exported
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:18:13-36
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:23:13-36
 	android:theme
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:19:13-51
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:24:13-51
 	android:name
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:17:13-41
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:22:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:20:13-23:29
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:25:13-28:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:21:17-69
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:26:17-69
 	android:name
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:21:25-66
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:26:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:22:17-77
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:27:17-77
 	android:name
-		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:22:27-74
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:27:27-74
+service#com.sonicsync.app.AudioCaptureService
+ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:31:9-35:63
+	android:enabled
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:33:13-35
+	android:exported
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:34:13-37
+	android:foregroundServiceType
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:35:13-60
+	android:name
+		ADDED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:32:13-48
 uses-sdk
 INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml

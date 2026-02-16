@@ -1,0 +1,89 @@
+    Checking tokio-tungstenite v0.24.0
+    Checking hyper-util v0.1.20
+    Checking rust-core v0.1.0 (C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\rust-core)
+    Checking tower-http v0.5.2
+    Checking tokio-tungstenite v0.20.1
+error[E0428]: the name `ClientMessage` is defined multiple times
+  --> rust-core\src\messages.rs:41:1
+   |
+ 4 | pub enum ClientMessage {
+   | ---------------------- previous definition of the type `ClientMessage` here
+...
+41 | pub enum ClientMessage {
+   | ^^^^^^^^^^^^^^^^^^^^^^ `ClientMessage` redefined here
+   |
+   = note: `ClientMessage` must be defined only once in the type namespace of this module
+
+error[E0119]: conflicting implementations of trait `Serialize` for type `messages::ClientMessage`
+  --> rust-core\src\messages.rs:40:10
+   |
+ 3 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |          --------- first implementation here
+...
+40 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |          ^^^^^^^^^ conflicting implementation for `messages::ClientMessage`
+   |
+   = note: this error originates in the derive macro `Serialize` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0119]: conflicting implementations of trait `Deserialize<'_>` for type `messages::ClientMessage`
+  --> rust-core\src\messages.rs:40:21
+   |
+ 3 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |                     ----------- first implementation here
+...
+40 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |                     ^^^^^^^^^^^ conflicting implementation for `messages::ClientMessage`
+   |
+   = note: this error originates in the derive macro `Deserialize` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0119]: conflicting implementations of trait `Debug` for type `messages::ClientMessage`
+  --> rust-core\src\messages.rs:40:34
+   |
+ 3 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |                                  ----- first implementation here
+...
+40 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |                                  ^^^^^ conflicting implementation for `messages::ClientMessage`
+
+error[E0119]: conflicting implementations of trait `Clone` for type `messages::ClientMessage`
+  --> rust-core\src\messages.rs:40:41
+   |
+ 3 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |                                         ----- first implementation here
+...
+40 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |                                         ^^^^^ conflicting implementation for `messages::ClientMessage`
+
+error[E0599]: no variant named `CommandRequest` found for enum `messages::ClientMessage`
+  --> rust-core\src\messages.rs:54:5
+   |
+ 4 | pub enum ClientMessage {
+   | ---------------------- variant `CommandRequest` not found here
+...
+54 |     CommandRequest { // Control commands (Play/Pause/Seek)
+   |     ^^^^^^^^^^^^^^ variant not found in `messages::ClientMessage`
+
+error[E0599]: no variant named `CommandRequest` found for enum `messages::ClientMessage`
+  --> rust-core\src\messages.rs:54:5
+   |
+ 4 |   pub enum ClientMessage {
+   |   ---------------------- variant `CommandRequest` not found here
+...
+54 | /     CommandRequest { // Control commands (Play/Pause/Seek)
+55 | |         cmd: ControlCommand
+56 | |     }
+   | |_____^ variant not found in `messages::ClientMessage`
+
+error[E0599]: no variant named `CommandRequest` found for enum `messages::ClientMessage`
+  --> rust-core\src\messages.rs:40:41
+   |
+ 4 | pub enum ClientMessage {
+   | ---------------------- variant `CommandRequest` not found here
+...
+40 | #[derive(Serialize, Deserialize, Debug, Clone)]
+   |                                         ^^^^^ variant not found in `messages::ClientMessage`
+
+Some errors have detailed explanations: E0119, E0428, E0599.
+For more information about an error, try `rustc --explain E0119`.
+error: could not compile `rust-core` (lib) due to 11 previous errors
+warning: build failed, waiting for other jobs to finish...
