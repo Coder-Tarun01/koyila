@@ -1,5 +1,5 @@
-# Build stage - use nightly to support edition2024 + bookworm for GLIBC compatibility
-FROM rust:nightly-bookworm AS builder
+# Build stage - use rustlang/rust for nightly support + bookworm for GLIBC compatibility
+FROM rustlang/rust:nightly-bookworm AS builder
 
 WORKDIR /app
 
