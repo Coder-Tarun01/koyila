@@ -10,15 +10,27 @@ android {
 
     defaultConfig {
         applicationId = "com.sonicsync.app"
-        minSdk = 26
+        minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 4
+        versionName = "1.3"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("../sonicsync-release-key.jks")
+            storePassword = "sonicsync123"
+            keyAlias = "sonicsync"
+            keyPassword = "sonicsync123"
+            enableV1Signing = true
+            enableV2Signing = true
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }

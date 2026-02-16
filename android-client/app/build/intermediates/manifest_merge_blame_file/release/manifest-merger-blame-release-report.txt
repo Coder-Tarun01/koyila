@@ -1,11 +1,11 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.sonicsync.app"
-4    android:versionCode="1"
-5    android:versionName="1.0" >
+4    android:versionCode="4"
+5    android:versionName="1.3" >
 6
 7    <uses-sdk
-8        android:minSdkVersion="26"
+8        android:minSdkVersion="24"
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
@@ -33,97 +33,93 @@
 20-->[androidx.core:core:1.12.0] C:\Users\tarun\.gradle\caches\transforms-3\12c62a97659b3f743650704b36441452\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
 21
 22    <application
-22-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:9:5-27:19
+22-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:9:5-25:19
 23        android:allowBackup="true"
 23-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:10:9-35
 24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 24-->[androidx.core:core:1.12.0] C:\Users\tarun\.gradle\caches\transforms-3\12c62a97659b3f743650704b36441452\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
 25        android:extractNativeLibs="false"
-26        android:icon="@mipmap/ic_launcher"
-26-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:11:9-43
-27        android:label="@string/app_name"
-27-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:12:9-41
-28        android:networkSecurityConfig="@xml/network_security_config"
-28-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:16:9-69
-29        android:roundIcon="@mipmap/ic_launcher_round"
-29-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:13:9-54
-30        android:supportsRtl="true"
-30-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:14:9-35
-31        android:theme="@style/Theme.SonicSync" >
-31-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:15:9-47
-32        <activity
-32-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:18:9-26:20
-33            android:name="com.sonicsync.app.MainActivity"
-33-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:19:13-41
-34            android:exported="true"
-34-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:20:13-36
-35            android:theme="@style/Theme.SonicSync" >
-35-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:21:13-51
-36            <intent-filter>
-36-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:22:13-25:29
-37                <action android:name="android.intent.action.MAIN" />
-37-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:23:17-69
-37-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:23:25-66
-38
-39                <category android:name="android.intent.category.LAUNCHER" />
-39-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:24:17-77
-39-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:24:27-74
-40            </intent-filter>
-41        </activity>
-42
-43        <provider
-43-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:24:9-32:20
-44            android:name="androidx.startup.InitializationProvider"
-44-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:25:13-67
-45            android:authorities="com.sonicsync.app.androidx-startup"
-45-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:26:13-68
-46            android:exported="false" >
-46-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:27:13-37
-47            <meta-data
-47-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
-48                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-48-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
-49                android:value="androidx.startup" />
-49-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
-50        </provider>
-51
-52        <receiver
-52-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
-53            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-53-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
-54            android:directBootAware="false"
-54-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
-55            android:enabled="true"
-55-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
-56            android:exported="true"
-56-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
-57            android:permission="android.permission.DUMP" >
-57-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
-58            <intent-filter>
-58-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
-59                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-59-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
-59-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
-60            </intent-filter>
-61            <intent-filter>
-61-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
-62                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-62-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
-62-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
-63            </intent-filter>
-64            <intent-filter>
-64-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
-65                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-65-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
-65-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
-66            </intent-filter>
-67            <intent-filter>
-67-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
-68                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-68-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
-68-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
-69            </intent-filter>
-70        </receiver>
-71    </application>
-72
-73</manifest>
+26        android:label="@string/app_name"
+26-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:11:9-41
+27        android:networkSecurityConfig="@xml/network_security_config"
+27-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:14:9-69
+28        android:supportsRtl="true"
+28-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:12:9-35
+29        android:theme="@style/Theme.SonicSync" >
+29-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:13:9-47
+30        <activity
+30-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:16:9-24:20
+31            android:name="com.sonicsync.app.MainActivity"
+31-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:17:13-41
+32            android:exported="true"
+32-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:18:13-36
+33            android:theme="@style/Theme.SonicSync" >
+33-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:19:13-51
+34            <intent-filter>
+34-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:20:13-23:29
+35                <action android:name="android.intent.action.MAIN" />
+35-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:21:17-69
+35-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:21:25-66
+36
+37                <category android:name="android.intent.category.LAUNCHER" />
+37-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:22:17-77
+37-->C:\Users\tarun\Desktop\koyila\sonicsync_-high-performance-audio-synchronization-system\android-client\app\src\main\AndroidManifest.xml:22:27-74
+38            </intent-filter>
+39        </activity>
+40
+41        <provider
+41-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:24:9-32:20
+42            android:name="androidx.startup.InitializationProvider"
+42-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:25:13-67
+43            android:authorities="com.sonicsync.app.androidx-startup"
+43-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:26:13-68
+44            android:exported="false" >
+44-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:27:13-37
+45            <meta-data
+45-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+46                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+46-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+47                android:value="androidx.startup" />
+47-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+48        </provider>
+49
+50        <receiver
+50-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+51            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+51-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+52            android:directBootAware="false"
+52-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+53            android:enabled="true"
+53-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+54            android:exported="true"
+54-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+55            android:permission="android.permission.DUMP" >
+55-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+56            <intent-filter>
+56-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+57                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+57-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+57-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+58            </intent-filter>
+59            <intent-filter>
+59-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+60                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+60-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+60-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+61            </intent-filter>
+62            <intent-filter>
+62-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+63                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+63-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+63-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+64            </intent-filter>
+65            <intent-filter>
+65-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+66                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+66-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+66-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\tarun\.gradle\caches\transforms-3\3c7930f14de2c31f6445b85515018087\transformed\jetified-profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+67            </intent-filter>
+68        </receiver>
+69    </application>
+70
+71</manifest>

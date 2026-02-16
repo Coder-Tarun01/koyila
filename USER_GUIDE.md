@@ -18,12 +18,15 @@ SonicSync lets a group of friends play the **same audio track in perfect sync** 
 
 ## 🚀 Quick Start (3 Steps)
 
-### Step 1: Install the APK
+### Step 1: Install the APK (v1.3 - Clean)
 
-1. Download the **SonicSync APK** file to your Android phone
-2. Open it and tap **Install**
-   - If blocked, go to **Settings → Security → Allow unknown sources**
-3. Launch **SonicSync** from your app drawer
+1. Download the **SonicSync_v1.3_Clean.apk** file to your phone.
+2. **IMPORTANT:** Open it using your phone's **"Files"** or **"My Files"** app (instead of installing directly from Google Drive/WhatsApp).
+3. If the "Install" button does nothing:
+   - **Uninstall** any old version of SonicSync first.
+   - Go to **Settings → Security** and ensure your File Manager has "Install Unknown Apps" permission enabled.
+   - Disable **Google Play Protect** temporarily if it blocks the installation silently.
+4. Launch **SonicSync** once installed.
 
 ### Step 2: Connect to Server
 
@@ -45,7 +48,14 @@ Tap **CONNECT TO SERVER** → Status should show **"Connected"** ✅
 **Option B — From your phone:**
 1. Tap **📂 PICK FROM DEVICE**
 2. Select any MP3/WAV file from your phone storage
-3. Tap **▶ PLAY AUDIO** 🎶
+3. Tap **▶ PLAY LOCALLY** 🎶
+
+**Option C — Host Control (Sync Everyone):**
+1. Enter a **direct audio URL** (not YouTube)
+2. Tap **📢 BROADCAST PLAY (HOST)**
+3. The server will tell **every connected phone** to play this song at the exact same time!
+
+> ⚠️ **YouTube Links:** SonicSync requires **direct audio links** (ending in .mp3, .wav, .m4a). YouTube links are webpages and will not play. Use a direct URL or pick a file from your device.
 
 To stop, tap **⏹ STOP AUDIO**
 

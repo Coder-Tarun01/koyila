@@ -43,9 +43,18 @@ object SonicSyncEngine {
         }
     }
 
+    fun safeRequestPlay(url: String, delayMs: Long = 2000) {
+        if (nativeLoaded) {
+            try { requestPlay(url, delayMs) } catch (e: Exception) {
+                Log.e("SonicSync", "requestPlay failed", e)
+            }
+        }
+    }
+
     // JNI Native Methods
     private external fun initLogger()
     private external fun connect(url: String, callback: SyncCallback)
+    private external fun requestPlay(url: String, delayMs: Long)
     external fun sendSyncRequest()
     external fun getOffset(): Long
     external fun getServerTime(): Long

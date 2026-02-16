@@ -108,9 +108,25 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // Play button
+        // Broadcast Play button (Host Control)
+        val hostPlayButton = Button(this).apply {
+            text = "📢 BROADCAST PLAY (HOST)"
+        }
+        hostPlayButton.setOnClickListener {
+            val audioUrl = audioInput?.text.toString().trim()
+            if (audioUrl.isEmpty() || audioUrl.startsWith("📁")) {
+                Toast.makeText(this, "Enter a direct audio URL to broadcast", Toast.LENGTH_SHORT).show()
+            } else if (audioUrl.contains("youtube.com") || audioUrl.contains("youtu.be")) {
+                Toast.makeText(this, "YouTube links not supported. Use direct MP3/WAV links.", Toast.LENGTH_LONG).show()
+            } else {
+                statusText?.text = "Status: Sending broadcast request..."
+                SonicSyncEngine.safeRequestPlay(audioUrl)
+            }
+        }
+
+        // Play button - play audio directly on this device
         val playButton = Button(this).apply {
-            text = "▶ PLAY AUDIO"
+            text = "▶ PLAY LOCALLY"
         }
         playButton.setOnClickListener {
             if (selectedFileUri != null) {
@@ -145,6 +161,7 @@ class MainActivity : ComponentActivity() {
         layout.addView(audioLabel)
         layout.addView(audioInput)
         layout.addView(browseButton)
+        layout.addView(hostPlayButton)
         layout.addView(playButton)
         layout.addView(stopButton)
         layout.addView(statusText)
