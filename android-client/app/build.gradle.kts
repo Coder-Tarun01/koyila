@@ -12,8 +12,8 @@ android {
         applicationId = "com.sonicsync.app"
         minSdk = 24
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.4"
+        versionCode = 7
+        versionName = "1.6"
     }
 
     signingConfigs {

@@ -171,6 +171,10 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun playAudio(uriString: String) {
+        if (uriString.trim().isEmpty()) {
+            Log.e("SonicSync", "playAudio called with empty URI")
+            return
+        }
         try {
             if (player == null) {
                 player = ExoPlayer.Builder(this).build()

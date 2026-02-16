@@ -18,9 +18,9 @@ SonicSync lets a group of friends play the **same audio track in perfect sync** 
 
 ## 🚀 Quick Start (3 Steps)
 
-### Step 1: Install the APK (v1.4 - Final)
+### Step 1: Install the APK (v1.5 - Final Release)
 
-1. Download the **SonicSync_v1.4_YouTube.apk** file to your phone.
+1. Download the **SonicSync_v1.5_Final.apk** file to your phone.
 2. **IMPORTANT:** Open it using your phone's **"Files"** or **"My Files"** app (instead of installing directly from Google Drive/WhatsApp).
 3. If the "Install" button does nothing:
    - **Uninstall** any old version of SonicSync first.

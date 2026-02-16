@@ -126,37 +126,42 @@ async fn handle_client_message(
              }
         }
         ClientMessage::PlayRequest { mut track_url, delay_ms } => {
-            // Check if it's a "webpage" URL (YouTube, SoundCloud, etc.)
-            let is_webpage = track_url.contains("youtube.com") || 
-                             track_url.contains("youtu.be") || 
-                             track_url.contains("soundcloud.com") ||
-                             track_url.contains("vimeo.com");
+            let state = state.clone();
+            let session_id = session_id.clone();
+            
+            // Spawn resolution in a separate task so we don't block the heartbeats
+            tokio::spawn(async move {
+                let is_webpage = track_url.contains("youtube.com") || 
+                                 track_url.contains("youtu.be") || 
+                                 track_url.contains("soundcloud.com") ||
+                                 track_url.contains("vimeo.com");
 
-            if is_webpage {
-                tracing::info!("Resolving webpage URL: {}", track_url);
-                match resolve_audio_url(&track_url).await {
-                    Ok(resolved) => {
-                        tracing::info!("Resolved {} -> {}", track_url, resolved);
-                        track_url = resolved;
-                    }
-                    Err(e) => {
-                        tracing::error!("Failed to resolve URL {}: {:?}", track_url, e);
-                        // We continue with the original URL, though it might fail on client
+                if is_webpage {
+                    tracing::info!("Resolving webpage URL: {}", track_url);
+                    match resolve_audio_url(&track_url).await {
+                        Ok(resolved) => {
+                            tracing::info!("Resolved {} -> {}...", track_url, &resolved[..resolved.len().min(50)]);
+                            track_url = resolved;
+                        }
+                        Err(e) => {
+                            tracing::error!("Failed to resolve URL {}: {:?}", track_url, e);
+                            return; // Don't broadcast if resolution failed
+                        }
                     }
                 }
-            }
 
-            let now = get_server_micros();
-            let start_time = now + (delay_ms * 1000); 
-            
-            let cmd = ServerMessage::PlayCommand {
-                track_url,
-                start_at_server_time: start_time,
-                server_time_at_broadcast: now,
-            };
-            
-            tracing::info!("Broadcasting PlayCommand at {}", start_time);
-            let _ = state.tx.send(cmd);
+                let now = get_server_micros();
+                let start_time = now + (delay_ms * 1000); 
+                
+                let cmd = ServerMessage::PlayCommand {
+                    track_url,
+                    start_at_server_time: start_time,
+                    server_time_at_broadcast: now,
+                };
+                
+                tracing::info!("Broadcasting PlayCommand for session {}", session_id);
+                let _ = state.tx.send(cmd);
+            });
         }
     }
 }
@@ -169,7 +174,6 @@ async fn resolve_audio_url(url: &str) -> anyhow::Result<String> {
         .arg("-g")
         .arg("--format")
         .arg("bestaudio")
-        .arg("--get-url")
         .arg(url)
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
@@ -179,7 +183,12 @@ async fn resolve_audio_url(url: &str) -> anyhow::Result<String> {
 
     if output.status.success() {
         let stdout = String::from_utf8(output.stdout)?;
-        Ok(stdout.trim().to_string())
+        // Take ONLY the first line (first URL) in case yt-dlp returns multiple
+        let first_url = stdout.lines().next().unwrap_or("").trim().to_string();
+        if first_url.is_empty() {
+             anyhow::bail!("yt-dlp returned empty URL")
+        }
+        Ok(first_url)
     } else {
         let stderr = String::from_utf8_lossy(&output.stderr);
         anyhow::bail!("yt-dlp failed: {}", stderr)

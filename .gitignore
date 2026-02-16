@@ -1,0 +1,21 @@
+# Rust
+target/
+**/*.rs.bk
+Cargo.lock
+
+# Android
+.gradle/
+build/
+local.properties
+*.apk
+*.jks
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Node
+node_modules/
+.next/
+dist/

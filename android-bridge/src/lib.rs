@@ -119,8 +119,17 @@ pub extern "system" fn Java_com_sonicsync_app_SonicSyncEngine_connect(
                                                 
                                                 // Call Java callback
                                                 if let Ok(mut env) = jvm.attach_current_thread() {
-                                                     let url_jstr = env.new_string(track_url).unwrap();
-                                                     let offset = CLIENT_STATE.lock().unwrap().offset;
+                                                     let url_jstr = match env.new_string(&track_url) {
+                                                         Ok(s) => s,
+                                                         Err(_) => {
+                                                             log::error!("Failed to create Java string for URL");
+                                                             continue;
+                                                         }
+                                                     };
+                                                     let offset = match CLIENT_STATE.lock() {
+                                                         Ok(guard) => guard.offset,
+                                                         Err(_) => 0,
+                                                     };
                                                      
                                                      let _ = env.call_method(
                                                          &callback_ref,
@@ -163,19 +172,31 @@ pub extern "system" fn Java_com_sonicsync_app_SonicSyncEngine_requestPlay(
     j_url: JString,
     delay_ms: jlong
 ) {
-    let url: String = env.get_string(&j_url).expect("Couldn't get java string!").into();
+    let url_res: Result<String, _> = env.get_string(&j_url).map(|s| s.into());
+    let url = match url_res {
+        Ok(s) => s,
+        Err(_) => {
+            log::error!("requestPlay: Invalid URL string from Java");
+            return;
+        }
+    };
+
     let msg = ClientMessage::PlayRequest {
         track_url: url,
         delay_ms: delay_ms as u64,
     };
 
-    if let Some(tx) = WS_SENDER.lock().unwrap().as_ref() {
-        let tx = tx.clone();
-        RUNTIME.spawn(async move {
-            let _ = tx.send(msg).await;
-        });
+    if let Ok(guard) = WS_SENDER.lock() {
+        if let Some(tx) = guard.as_ref() {
+            let tx = tx.clone();
+            RUNTIME.spawn(async move {
+                let _ = tx.send(msg).await;
+            });
+        } else {
+            log::error!("Cannot send PlayRequest: Not connected to server");
+        }
     } else {
-        log::error!("Cannot send PlayRequest: Not connected to server");
+        log::error!("WS_SENDER lock poisoned");
     }
 }
 
