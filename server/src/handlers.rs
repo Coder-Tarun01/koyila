@@ -161,7 +161,7 @@ async fn handle_client_message(
     }
 }
 
-async fun resolve_audio_url(url: &str) -> anyhow::Result<String> {
+async fn resolve_audio_url(url: &str) -> anyhow::Result<String> {
     use tokio::process::Command;
     use std::process::Stdio;
 
