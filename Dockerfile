@@ -1,5 +1,5 @@
-# Build stage - use bookworm to match the runner image
-FROM rust:1.83-bookworm AS builder
+# Build stage - use nightly to support edition2024 + bookworm for GLIBC compatibility
+FROM rust:nightly-bookworm AS builder
 
 WORKDIR /app
 
