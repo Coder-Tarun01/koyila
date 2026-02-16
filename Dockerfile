@@ -1,5 +1,5 @@
-# Build stage
-FROM rust:latest AS builder
+# Build stage - use bookworm to match the runner image
+FROM rust:1.83-bookworm AS builder
 
 WORKDIR /app
 
