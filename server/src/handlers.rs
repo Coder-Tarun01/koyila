@@ -125,7 +125,27 @@ async fn handle_client_message(
                 peer.offset.store(offset as u64, Ordering::Relaxed);
              }
         }
-        ClientMessage::PlayRequest { track_url, delay_ms } => {
+        ClientMessage::PlayRequest { mut track_url, delay_ms } => {
+            // Check if it's a "webpage" URL (YouTube, SoundCloud, etc.)
+            let is_webpage = track_url.contains("youtube.com") || 
+                             track_url.contains("youtu.be") || 
+                             track_url.contains("soundcloud.com") ||
+                             track_url.contains("vimeo.com");
+
+            if is_webpage {
+                tracing::info!("Resolving webpage URL: {}", track_url);
+                match resolve_audio_url(&track_url).await {
+                    Ok(resolved) => {
+                        tracing::info!("Resolved {} -> {}", track_url, resolved);
+                        track_url = resolved;
+                    }
+                    Err(e) => {
+                        tracing::error!("Failed to resolve URL {}: {:?}", track_url, e);
+                        // We continue with the original URL, though it might fail on client
+                    }
+                }
+            }
+
             let now = get_server_micros();
             let start_time = now + (delay_ms * 1000); 
             
@@ -135,9 +155,34 @@ async fn handle_client_message(
                 server_time_at_broadcast: now,
             };
             
-            tracing::info!("Broadcasting PlayCommand for {} at {}", start_time, now);
+            tracing::info!("Broadcasting PlayCommand at {}", start_time);
             let _ = state.tx.send(cmd);
         }
+    }
+}
+
+async fun resolve_audio_url(url: &str) -> anyhow::Result<String> {
+    use tokio::process::Command;
+    use std::process::Stdio;
+
+    let output = Command::new("yt-dlp")
+        .arg("-g")
+        .arg("--format")
+        .arg("bestaudio")
+        .arg("--get-url")
+        .arg(url)
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()?
+        .wait_with_output()
+        .await?;
+
+    if output.status.success() {
+        let stdout = String::from_utf8(output.stdout)?;
+        Ok(stdout.trim().to_string())
+    } else {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        anyhow::bail!("yt-dlp failed: {}", stderr)
     }
 }
 

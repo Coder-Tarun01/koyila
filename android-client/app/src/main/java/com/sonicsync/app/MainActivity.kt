@@ -115,10 +115,11 @@ class MainActivity : ComponentActivity() {
         hostPlayButton.setOnClickListener {
             val audioUrl = audioInput?.text.toString().trim()
             if (audioUrl.isEmpty() || audioUrl.startsWith("📁")) {
-                Toast.makeText(this, "Enter a direct audio URL to broadcast", Toast.LENGTH_SHORT).show()
-            } else if (audioUrl.contains("youtube.com") || audioUrl.contains("youtu.be")) {
-                Toast.makeText(this, "YouTube links not supported. Use direct MP3/WAV links.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Enter an audio URL to broadcast", Toast.LENGTH_SHORT).show()
             } else {
+                if (audioUrl.contains("youtube.com") || audioUrl.contains("youtu.be")) {
+                    Toast.makeText(this, "Resolving YouTube link on server...", Toast.LENGTH_SHORT).show()
+                }
                 statusText?.text = "Status: Sending broadcast request..."
                 SonicSyncEngine.safeRequestPlay(audioUrl)
             }

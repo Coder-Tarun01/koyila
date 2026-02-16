@@ -50,12 +50,12 @@ Tap **CONNECT TO SERVER** → Status should show **"Connected"** ✅
 2. Select any MP3/WAV file from your phone storage
 3. Tap **▶ PLAY LOCALLY** 🎶
 
-**Option C — Host Control (Sync Everyone):**
-1. Enter a **direct audio URL** (not YouTube)
+**Option C — Sync Everything (YouTube Supported!):**
+1. Enter any URL (including **YouTube**, SoundCloud, etc.)
 2. Tap **📢 BROADCAST PLAY (HOST)**
-3. The server will tell **every connected phone** to play this song at the exact same time!
+3. The server will resolve the link and tell **every connected phone** to play the audio at the exact same time!
 
-> ⚠️ **YouTube Links:** SonicSync requires **direct audio links** (ending in .mp3, .wav, .m4a). YouTube links are webpages and will not play. Use a direct URL or pick a file from your device.
+> 🚀 **New:** We now support **YouTube** links! The server will automatically extract the audio for you.
 
 To stop, tap **⏹ STOP AUDIO**
 
