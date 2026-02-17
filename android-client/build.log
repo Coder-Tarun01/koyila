@@ -1,0 +1,66 @@
+> Task :app:clean
+> Task :app:buildKotlinToolingMetadata
+> Task :app:checkKotlinGradlePluginConfigurationErrors
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:generateReleaseResValues
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:generateReleaseResources
+> Task :app:checkReleaseAarMetadata
+> Task :app:packageReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :app:parseReleaseLocalResources
+> Task :app:processReleaseMainManifest
+> Task :app:processReleaseManifest
+> Task :app:javaPreCompileRelease
+> Task :app:extractProguardFiles
+> Task :app:mergeReleaseJniLibFolders
+> Task :app:processReleaseManifestForPackage
+> Task :app:mergeReleaseNativeLibs
+> Task :app:checkReleaseDuplicateClasses
+> Task :app:mergeReleaseResources
+> Task :app:desugarReleaseFileDependencies
+> Task :app:mergeReleaseArtProfile
+> Task :app:mergeReleaseShaders
+> Task :app:compileReleaseShaders NO-SOURCE
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:mergeReleaseAssets
+> Task :app:compressReleaseAssets
+> Task :app:collectReleaseDependencies
+> Task :app:sdkReleaseDependencyData
+> Task :app:validateSigningRelease
+> Task :app:writeReleaseAppMetadata
+> Task :app:writeReleaseSigningConfigVersions
+> Task :app:stripReleaseDebugSymbols
+> Task :app:extractReleaseNativeSymbolTables
+> Task :app:mergeReleaseNativeDebugMetadata
+> Task :app:processReleaseResources
+> Task :app:optimizeReleaseResources
+> Task :app:mergeExtDexRelease
+
+> Task :app:compileReleaseKotlin
+w: file:///C:/Users/tarun/Desktop/koyila/sonicsync_-high-performance-audio-synchronization-system/android-client/app/src/main/java/com/sonicsync/app/AudioCaptureService.kt:55:41 'getParcelableExtra(String!): T?' is deprecated. Deprecated in Java
+w: file:///C:/Users/tarun/Desktop/koyila/sonicsync_-high-performance-audio-synchronization-system/android-client/app/src/main/java/com/sonicsync/app/DiscoveryManager.kt:93:32 'resolveService(NsdServiceInfo!, NsdManager.ResolveListener!): Unit' is deprecated. Deprecated in Java
+w: file:///C:/Users/tarun/Desktop/koyila/sonicsync_-high-performance-audio-synchronization-system/android-client/app/src/main/java/com/sonicsync/app/MainActivity.kt:80:73 'getter for host: InetAddress!' is deprecated. Deprecated in Java
+w: file:///C:/Users/tarun/Desktop/koyila/sonicsync_-high-performance-audio-synchronization-system/android-client/app/src/main/java/com/sonicsync/app/MainActivity.kt:80:93 'getter for host: InetAddress!' is deprecated. Deprecated in Java
+w: file:///C:/Users/tarun/Desktop/koyila/sonicsync_-high-performance-audio-synchronization-system/android-client/app/src/main/java/com/sonicsync/app/MainActivity.kt:84:84 'getter for host: InetAddress!' is deprecated. Deprecated in Java
+w: file:///C:/Users/tarun/Desktop/koyila/sonicsync_-high-performance-audio-synchronization-system/android-client/app/src/main/java/com/sonicsync/app/MainActivity.kt:435:32 'getter for host: InetAddress!' is deprecated. Deprecated in Java
+
+> Task :app:compileReleaseJavaWithJavac NO-SOURCE
+> Task :app:generateReleaseLintVitalReportModel
+> Task :app:dexBuilderRelease
+> Task :app:mergeReleaseGlobalSynthetics
+> Task :app:processReleaseJavaRes
+> Task :app:mergeReleaseJavaResource
+> Task :app:mergeDexRelease
+> Task :app:compileReleaseArtProfile
+> Task :app:packageRelease
+> Task :app:createReleaseApkListingFileRedirect
+> Task :app:lintVitalAnalyzeRelease
+> Task :app:lintVitalReportRelease
+> Task :app:lintVitalRelease
+> Task :app:assembleRelease
+
+BUILD SUCCESSFUL in 47s
+48 actionable tasks: 48 executed

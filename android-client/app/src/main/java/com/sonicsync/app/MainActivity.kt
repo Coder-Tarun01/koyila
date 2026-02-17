@@ -252,22 +252,39 @@ class MainActivity : ComponentActivity() {
             val port = 3000
 
             if (selectedFileUri != null && audioInput?.text.toString().startsWith("📁")) {
-                // Local file - provide path to Rust server and broadcast our own IP
                 val filePath = getRealPathFromURI(selectedFileUri!!)
                 if (filePath != null) {
                     updateStatus("Status: Hosting local file and broadcasting...")
-                    SonicSyncEngine.hostFile(filePath)
-                    val streamUrl = "http://$hostIp:$port/stream"
-                    SonicSyncEngine.safeBroadcastPlay(streamUrl, 3000)
-                    // Also play locally
-                    playAudio(streamUrl)
+                    if (SonicSyncEngine.isNativeAvailable()) {
+                        SonicSyncEngine.hostFile(filePath)
+                        val streamUrl = "http://$hostIp:$port/stream"
+                        val delayMs = 3000L
+                        SonicSyncEngine.safeBroadcastPlay(streamUrl, delayMs)
+                        val now = SonicSyncEngine.getServerTime()
+                        prepareAudio(streamUrl)
+                        startHostPlaybackDelayed(delayMs, 0, now + (delayMs * 1000))
+                    } else {
+                        // Fallback: Local playback
+                        prepareAudio(filePath)
+                        player?.play()
+                        updateStatus("Status: Playing Local File (No Sync - Native Missing)")
+                    }
                 } else {
                     Toast.makeText(this, "Could not resolve file path", Toast.LENGTH_SHORT).show()
                 }
             } else if (audioUrl.isNotEmpty()) {
                  updateStatus("Status: Broadcasting to all clients...")
-                 SonicSyncEngine.safeBroadcastPlay(audioUrl, 3000)
-                 playAudio(audioUrl)
+                 if (SonicSyncEngine.isNativeAvailable()) {
+                     val delayMs = 3000L
+                     SonicSyncEngine.safeBroadcastPlay(audioUrl, delayMs)
+                     val now = SonicSyncEngine.getServerTime()
+                     prepareAudio(audioUrl)
+                     startHostPlaybackDelayed(delayMs, 0, now + (delayMs * 1000))
+                 } else {
+                     prepareAudio(audioUrl)
+                     player?.play()
+                     updateStatus("Status: Playing (No Sync - Native Missing)")
+                 }
             } else {
                  Toast.makeText(this, "Enter an audio URL or pick a file first", Toast.LENGTH_SHORT).show()
             }
@@ -290,8 +307,12 @@ class MainActivity : ComponentActivity() {
         val btnPause = Button(this).apply { text = "⏸ PAUSE" }
         btnPause.setOnClickListener {
             if (isSyncedPlaying || (player != null && player!!.isPlaying)) {
-                 SonicSyncEngine.sendPause()
+                 if (SonicSyncEngine.isNativeAvailable()) {
+                     SonicSyncEngine.sendPause()
+                 }
                  player?.pause() 
+                 isSyncedPlaying = false
+                 stopDriftCorrection()
                  updateStatus("Status: Paused by Host")
             }
         }
@@ -299,23 +320,47 @@ class MainActivity : ComponentActivity() {
         val btnResume = Button(this).apply { text = "▶ RESUME" }
         btnResume.setOnClickListener {
              val pos = player?.currentPosition ?: 0
-             SonicSyncEngine.sendPlay(pos)
-             player?.play()
-             updateStatus("Status: Resumed by Host")
+             if (SonicSyncEngine.isNativeAvailable()) {
+                 SonicSyncEngine.sendPlay(pos)
+                 val delayMs = 500L
+                 val now = SonicSyncEngine.getServerTime()
+                 startHostPlaybackDelayed(delayMs, pos, now + (delayMs * 1000))
+                 updateStatus("Status: Resumed by Host (Synced)")
+             } else {
+                 player?.play()
+                 updateStatus("Status: Resumed (Local)")
+             }
         }
         
         val btnSeek = Button(this).apply { text = "⏩ +10s" }
         btnSeek.setOnClickListener {
              val pos = (player?.currentPosition ?: 0) + 10000
-             SonicSyncEngine.sendSeek(pos)
-             player?.seekTo(pos)
-             updateStatus("Status: Seeked +10s")
+             if (SonicSyncEngine.isNativeAvailable()) {
+                 SonicSyncEngine.sendSeek(pos)
+                 
+                 if (player?.isPlaying == true || isSyncedPlaying) {
+                     player?.pause() // Pause immediately while waiting for sync
+                     val delayMs = 500L
+                     val now = SonicSyncEngine.getServerTime()
+                     startHostPlaybackDelayed(delayMs, pos, now + (delayMs * 1000))
+                 } else {
+                     player?.seekTo(pos)
+                 }
+                 updateStatus("Status: Seeked +10s (Synced)")
+             } else {
+                 player?.seekTo(pos)
+                 updateStatus("Status: Seeked +10s (Local)")
+             }
         }
         
         val btnStop = Button(this).apply { text = "⏹ STOP" }
         btnStop.setOnClickListener {
-             SonicSyncEngine.sendPause() // No Stop command in JNI yet, use Pause
+             if (SonicSyncEngine.isNativeAvailable()) {
+                 SonicSyncEngine.sendPause()
+             }
              player?.stop()
+             isSyncedPlaying = false // Ensure we stop drift correction
+             stopDriftCorrection()
              updateStatus("Status: Stopped")
         }
 
@@ -430,6 +475,13 @@ class MainActivity : ComponentActivity() {
 
     private val driftCorrectionRunnable = object : Runnable {
         override fun run() {
+            if (!SonicSyncEngine.isNativeAvailable()) {
+                driftCorrectionHandler.postDelayed(this, 1000) // Check again later or disable? 
+                // Better to just return and rely on isSyncedPlaying being false if native missing (safe logic elsewhere)
+                // But better safe than sorry
+                return 
+            }
+
             if (isSyncedPlaying && player != null && player!!.isPlaying) {
                 try {
                     val nowServerTime = SonicSyncEngine.getServerTime()
@@ -495,7 +547,8 @@ class MainActivity : ComponentActivity() {
                         if (url == "live") {
                             updateStatus("Status: Joining Live Stream... 🔴")
                             val streamUrl = wsUrl.replace("ws://", "http://").replace("/ws", "/stream/live")
-                            playAudio(streamUrl)
+                            prepareAudio(streamUrl)
+                            player?.play()
                         } else {
                             val nowServerTime = SonicSyncEngine.getServerTime()
                             val waitTime = (startAtServerTime / 1000) - (nowServerTime / 1000) // Convert micros to millis
@@ -558,25 +611,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun playAudio(uriString: String) {
-        if (uriString.trim().isEmpty()) {
-            Log.e("SonicSync", "playAudio called with empty URI")
-            return
-        }
-        try {
-            if (player == null) {
-                player = ExoPlayer.Builder(this).build()
-            }
-            player?.stop()
-            val mediaItem = MediaItem.fromUri(uriString)
-            player?.setMediaItem(mediaItem)
-            player?.prepare()
-            player?.play()
-            updateStatus("Status: Playing audio... 🎶")
-            Log.i("SonicSync", "Playing: $uriString")
-        } catch (e: Exception) {
-            updateStatus("Status: Playback error - ${e.message}")
-            Log.e("SonicSync", "Playback error", e)
+    private fun updateStatus(status: String) {
+        runOnUiThread {
+            statusText?.text = status
+            hostStatusTextView?.text = status
+            clientStatusTextView?.text = status
         }
     }
 
@@ -592,12 +631,43 @@ class MainActivity : ComponentActivity() {
         return name
     }
 
-    private fun updateStatus(status: String) {
-        runOnUiThread {
-            statusText?.text = status
-            hostStatusTextView?.text = status
-            clientStatusTextView?.text = status
+    private fun prepareAudio(uriString: String) {
+        if (uriString.trim().isEmpty()) return
+        try {
+            if (player == null) {
+                player = ExoPlayer.Builder(this).build()
+            }
+            player?.stop()
+            val mediaItem = MediaItem.fromUri(uriString)
+            player?.setMediaItem(mediaItem)
+            player?.prepare()
+            Log.i("SonicSync", "Prepared: $uriString")
+        } catch (e: Exception) {
+            updateStatus("Status: Audio prep error - ${e.message}")
+            Log.e("SonicSync", "Audio prep error", e)
         }
+    }
+
+    private fun startHostPlaybackDelayed(delayMs: Long, startPosMs: Long, startServerTimeMicros: Long) {
+        // Set sync state
+        currentSyncStartTime = startServerTimeMicros
+        currentSyncStartPos = startPosMs
+        isSyncedPlaying = true
+
+        updateStatus("Status: Starting in ${delayMs}ms...")
+        
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            try {
+                if (player != null) {
+                    player?.seekTo(startPosMs)
+                    player?.play()
+                    startDriftCorrection()
+                    updateStatus("Status: Broadcasting & Playing 🎶")
+                }
+            } catch (e: Exception) {
+                 Log.e("SonicSync", "Delayed start failed", e)
+            }
+        }, delayMs)
     }
 
     private fun getLocalIpAddress(): String? {
