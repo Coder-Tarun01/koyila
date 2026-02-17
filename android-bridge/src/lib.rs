@@ -124,12 +124,13 @@ pub extern "system" fn Java_com_sonicsync_app_SonicSyncEngine_getLocalIpAddress(
 #[no_mangle]
 pub extern "system" fn Java_com_sonicsync_app_SonicSyncEngine_sendPlay(
     _env: JNIEnv, 
-    _class: JClass
+    _class: JClass,
+    start_pos_ms: jlong
 ) {
     // We need to inject a Play command into the SERVER, not the client.
     // Using `server::control::process_control_command`.
     if let Some(state) = SERVER_STATE.lock().unwrap().as_ref() {
-        let cmd = ControlCommand::Play { start_at_ms: 0, delay_ms: 500 }; // Default params
+        let cmd = ControlCommand::Play { start_at_ms: start_pos_ms as u64, delay_ms: 500 }; // Default params
         server::control::process_control_command(state, cmd);
     }
 }
@@ -309,8 +310,8 @@ pub extern "system" fn Java_com_sonicsync_app_SonicSyncEngine_connect(
                                                 state.rtt = stats.rtt;
                                                 log::debug!("Sync Updated: Offset={}us RTT={}us", stats.offset, stats.rtt);
                                             }
-                                            ServerMessage::PlayCommand { track_url, start_at_server_time, .. } => {
-                                                log::info!("Received PlayCommand: {} @ {}", track_url, start_at_server_time);
+                                            ServerMessage::PlayCommand { track_url, start_at_server_time, start_at_position_ms, .. } => {
+                                                log::info!("Received PlayCommand: {} @ {} pos={}", track_url, start_at_server_time, start_at_position_ms);
                                                 
                                                 // Call Java callback
                                                 if let Ok(mut env) = jvm.attach_current_thread() {
@@ -329,16 +330,29 @@ pub extern "system" fn Java_com_sonicsync_app_SonicSyncEngine_connect(
                                                      let _ = env.call_method(
                                                          &callback_ref,
                                                          "onPlayCommand",
-                                                         "(Ljava/lang/String;JJ)V",
+                                                         "(Ljava/lang/String;JJJ)V",
                                                          &[
                                                              JValue::Object(&url_jstr),
                                                              JValue::Long(start_at_server_time as i64),
+                                                             JValue::Long(start_at_position_ms as i64),
                                                              JValue::Long(offset)
                                                          ]
                                                      );
                                                 }
                                             }
-                                            _ => {}
+                                            ServerMessage::PauseCommand { server_time } => {
+                                                 log::info!("Received PauseCommand: @ {}", server_time);
+                                                 if let Ok(mut env) = jvm.attach_current_thread() {
+                                                     let _ = env.call_method(
+                                                         &callback_ref,
+                                                         "onPauseCommand",
+                                                         "(J)V",
+                                                         &[JValue::Long(server_time as i64)]
+                                                     );
+                                                 }
+                                            }
+                                            ServerMessage::Welcome { .. } | ServerMessage::SyncRequired => {}
+                                            // _ => {} // Removed wildcard to ensure exhaustive matching in future
                                         }
                                     }
                                 }

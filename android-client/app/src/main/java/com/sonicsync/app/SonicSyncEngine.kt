@@ -22,7 +22,8 @@ object SonicSyncEngine {
     fun isNativeAvailable(): Boolean = nativeLoaded
 
     interface SyncCallback {
-        fun onPlayCommand(url: String, startAtServerTime: Long, currentServerOffset: Long)
+        fun onPlayCommand(url: String, startAtServerTime: Long, startAtPositionMs: Long, currentServerOffset: Long)
+        fun onPauseCommand(serverTime: Long)
     }
 
     private var callback: SyncCallback? = null
@@ -93,7 +94,7 @@ object SonicSyncEngine {
     
     // Host Controls
     @JvmStatic
-    external fun sendPlay()
+    external fun sendPlay(startPositionMs: Long)
     @JvmStatic
     external fun sendPause()
     @JvmStatic

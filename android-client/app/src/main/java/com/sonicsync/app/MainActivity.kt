@@ -25,6 +25,13 @@ class MainActivity : ComponentActivity() {
     private var hostStatusTextView: TextView? = null
     private var clientStatusTextView: TextView? = null
 
+    // Sync State
+    private var currentSyncTrackUrl: String? = null
+    private var currentSyncStartTime: Long = 0
+    private var currentSyncStartPos: Long = 0
+    private var isSyncedPlaying: Boolean = false
+    private val driftCorrectionHandler = android.os.Handler(android.os.Looper.getMainLooper())
+
     private val filePickerLauncher = registerForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
@@ -273,6 +280,50 @@ class MainActivity : ComponentActivity() {
             gravity = android.view.Gravity.CENTER
         }
 
+        // Controls Container
+        val controlsLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = android.view.Gravity.CENTER
+            setPadding(0, 32, 0, 32)
+        }
+        
+        val btnPause = Button(this).apply { text = "⏸ PAUSE" }
+        btnPause.setOnClickListener {
+            if (isSyncedPlaying || (player != null && player!!.isPlaying)) {
+                 SonicSyncEngine.sendPause()
+                 player?.pause() 
+                 updateStatus("Status: Paused by Host")
+            }
+        }
+        
+        val btnResume = Button(this).apply { text = "▶ RESUME" }
+        btnResume.setOnClickListener {
+             val pos = player?.currentPosition ?: 0
+             SonicSyncEngine.sendPlay(pos)
+             player?.play()
+             updateStatus("Status: Resumed by Host")
+        }
+        
+        val btnSeek = Button(this).apply { text = "⏩ +10s" }
+        btnSeek.setOnClickListener {
+             val pos = (player?.currentPosition ?: 0) + 10000
+             SonicSyncEngine.sendSeek(pos)
+             player?.seekTo(pos)
+             updateStatus("Status: Seeked +10s")
+        }
+        
+        val btnStop = Button(this).apply { text = "⏹ STOP" }
+        btnStop.setOnClickListener {
+             SonicSyncEngine.sendPause() // No Stop command in JNI yet, use Pause
+             player?.stop()
+             updateStatus("Status: Stopped")
+        }
+
+        controlsLayout.addView(btnPause)
+        controlsLayout.addView(btnResume)
+        controlsLayout.addView(btnSeek)
+        controlsLayout.addView(btnStop)
+
         layout.addView(backButton)
         layout.addView(title)
         layout.addView(startHostButton)
@@ -282,6 +333,7 @@ class MainActivity : ComponentActivity() {
         layout.addView(audioInput)
         layout.addView(browseButton)
         layout.addView(broadcastButton)
+        layout.addView(controlsLayout) // Added controls
         layout.addView(hostStatusTextView) // Add status text here for Host view
 
         scrollView.addView(layout)
@@ -376,12 +428,69 @@ class MainActivity : ComponentActivity() {
         syncHandler.removeCallbacks(syncRunnable)
     }
 
+    private val driftCorrectionRunnable = object : Runnable {
+        override fun run() {
+            if (isSyncedPlaying && player != null && player!!.isPlaying) {
+                try {
+                    val nowServerTime = SonicSyncEngine.getServerTime()
+                    // Time elapsed since the scheduled "start time" (in server time)
+                    // Note: startAtServerTime is when the track *starts* playing from startAtPositionMs
+                    val elapsedSinceStartMicros = nowServerTime - currentSyncStartTime
+                    val elapsedSinceStartMs = elapsedSinceStartMicros / 1000
+
+                    val expectedPos = currentSyncStartPos + elapsedSinceStartMs
+                    val actualPos = player!!.currentPosition 
+
+                    // drift = actual - expected
+                    // if actual < expected (behind), drift is negative.
+                    // Rust PID expects negative drift to produce positive correction (speed > 1.0)
+                    val driftMs = actualPos - expectedPos 
+
+                    // drift > 0: player is ahead (need smaller speed)
+                    // drift < 0: player is behind (need larger speed)
+
+                    if (Math.abs(driftMs) > 200) {
+                         // Hard resync
+                         player!!.seekTo(expectedPos)
+                         Log.w("SonicSync", "Hard sync: drift $driftMs ms")
+                         statusText?.text = "Resyncing..."
+                    } else if (Math.abs(driftMs) > 15) {
+                         // Soft resync
+                         // Speed up or slow down
+                         // Using primitive logic or PID if we want strict sync
+                         // Let's use the native PID calculator
+                         val speed = SonicSyncEngine.calculateCorrection(driftMs, 0.1)
+                         player!!.setPlaybackSpeed(speed.toFloat())
+                         // Log.d("SonicSync", "Drift: $driftMs ms -> Speed: $speed")
+                    } else {
+                         if (player!!.playbackParameters.speed != 1.0f) {
+                             player!!.setPlaybackSpeed(1.0f)
+                         }
+                    }
+                } catch (e: Exception) {
+                    Log.e("SonicSync", "Drift correction error", e)
+                }
+            }
+            driftCorrectionHandler.postDelayed(this, 100)
+        }
+    }
+
+    private fun startDriftCorrection() {
+        stopDriftCorrection()
+        driftCorrectionHandler.post(driftCorrectionRunnable)
+    }
+
+    private fun stopDriftCorrection() {
+        driftCorrectionHandler.removeCallbacks(driftCorrectionRunnable)
+        player?.setPlaybackSpeed(1.0f)
+    }
+
     private fun connectToServer(wsUrl: String) {
         updateStatus("Status: Connecting to $wsUrl...")
         try {
             SonicSyncEngine.safeInitLogger()
             SonicSyncEngine.safeConnect(wsUrl, object : SonicSyncEngine.SyncCallback {
-                override fun onPlayCommand(url: String, startAtServerTime: Long, currentServerOffset: Long) {
+                override fun onPlayCommand(url: String, startAtServerTime: Long, startAtPositionMs: Long, currentServerOffset: Long) {
                     runOnUiThread {
                         if (url == "live") {
                             updateStatus("Status: Joining Live Stream... 🔴")
@@ -391,30 +500,51 @@ class MainActivity : ComponentActivity() {
                             val nowServerTime = SonicSyncEngine.getServerTime()
                             val waitTime = (startAtServerTime / 1000) - (nowServerTime / 1000) // Convert micros to millis
                             
-                            updateStatus("Status: Scheduled play in ${waitTime}ms")
+                            updateStatus("Status: Scheduled play in ${waitTime}ms (Pos: ${startAtPositionMs}ms)")
                             
                             // Prepare player
                             if (player == null) {
                                 player = ExoPlayer.Builder(this@MainActivity).build()
                             }
-                            player?.stop()
+                            
+                            // Load media if different
                             val mediaItem = MediaItem.fromUri(url)
                             player?.setMediaItem(mediaItem)
                             player?.prepare()
+                            
+                            // Store sync state
+                            currentSyncTrackUrl = url
+                            currentSyncStartTime = startAtServerTime
+                            currentSyncStartPos = startAtPositionMs
+                            isSyncedPlaying = true
 
                             if (waitTime > 0) {
+                                player?.seekTo(startAtPositionMs)
                                 android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
                                     player?.play()
+                                    startDriftCorrection()
                                     updateStatus("Status: Playing (Synced) 🎶")
                                 }, waitTime)
                             } else {
                                 // Already passed start time, seek to current position
-                                val seekPos = -waitTime // waitTime is negative
-                                player?.seekTo(seekPos)
+                                val elapsedSinceStart = (nowServerTime - startAtServerTime) / 1000
+                                val targetPos = startAtPositionMs + elapsedSinceStart
+                                
+                                player?.seekTo(targetPos)
                                 player?.play()
+                                startDriftCorrection()
                                 updateStatus("Status: Playing (Joined Late) 🎶")
                             }
                         }
+                    }
+                }
+                
+                override fun onPauseCommand(serverTime: Long) {
+                    runOnUiThread {
+                        player?.pause()
+                        isSyncedPlaying = false
+                        stopDriftCorrection()
+                        updateStatus("Status: Paused (Synced)")
                     }
                 }
             })
